@@ -28,6 +28,36 @@ namespace Microsoft.Msagl.GraphViewerGdi
             return bitmap;
         }
 
+        public static byte[] SaveImageToBytes(this GViewer viewer, double imageScale) {
+            Image image = viewer.SaveImageToMemory(imageScale);
+
+            using (var stream = new MemoryStream()) {
+                image.Save(stream, ImageFormat.Png);
+                stream.Seek(0, SeekOrigin.Begin);
+                return stream.ToArray();
+            }            
+        }
+
+        public static byte[] SaveSvgToMemory(this GViewer viewer) 
+        {
+            using (MemoryStream stream = new MemoryStream()) 
+            {
+                SvgGraphWriter writer = new SvgGraphWriter(stream, viewer.Graph);
+
+                writer.Write();
+
+                stream.Seek(0, SeekOrigin.Begin);
+
+                using (TextReader reader = new StreamReader(stream)) 
+                {
+                    var svg = reader.ReadToEnd();
+                    return Encoding.UTF8.GetBytes(svg);
+                }
+            }
+            
+            
+        }
+
         private static void DrawGeneral(GViewer viewer, int w, int h, Graphics graphics, double imageScale) {
             graphics.SmoothingMode = SmoothingMode.HighQuality;
             graphics.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
