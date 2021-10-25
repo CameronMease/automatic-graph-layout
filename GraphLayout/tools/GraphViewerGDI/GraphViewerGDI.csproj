@@ -23,6 +23,7 @@
     <UseWindowsForms>true</UseWindowsForms>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageId>Pinknose.GraphViewerGDI</PackageId>
+    <Version>1.0.1</Version>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DefineConstants>TRACE;TEST_MSAGL;TEST_MSAGL</DefineConstants>
